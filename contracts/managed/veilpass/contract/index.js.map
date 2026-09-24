@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../../",
+  "sources": ["contracts/veilpass.compact", "compiler/standard-library.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;;;;MAYA,AAAA,oBAKC;;OAAA;MAID,AAAA,YAYC;;;;;cAZ2B,YAAqB;;;;;;;;;;;;;;;;;;yCAArB,YAAqB;;;;;;;;;8CAArB,YAAqB;;;OAYhD;;;;GACA;EAlCD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAQA;;;;;;;;;;yEAA6C;IAC7C;;;;;;;;;yEAAmC;;;;;;;GAyBlC;EClCD,AAAA,kBAAA;oEAAA;;;EAAA,AAAA,kBAAA;oEAAA;;;EDKA,AAAA,mBAAsC;;0DAAtC,gBAAsC;;;;;;;;;;;;;;GAAA;EAOtC,AAAA,uBAKC,CALwC,QAAiB;;mCAGlD,QAAM;GAEb;EAID,AAAA,eAYC,4BAZ2B,YAAqB;UACvC,WAML;gDAHO,YAAU;;;qDAKV;;;;;;;;;;;4KAAsB,WAAS;;;;0HAAjB;;IACtB;;;;;;;;;;2HAAsB,WAAS;;;;;wEAAjB;UACd,KAAW;IAAX;;;;;;;;;;6FAAA,KAAW;;;;wEAAA;;GACd;;;;;;;;;;;;;;;;IAzBD;;;;;uCAAA;;;;;;;;;;;;;;;;4GAA6C;;;;;;uCAA7C;;;;;;;;;;;;4GAA6C;;;;;;;;;;;;;;uCAA7C;;;;;;;;;;;;;;;4GAA6C;;;;;;;;;KAAA;IAC7C;qCAAA;;;;;;;;;;;0GAAmC;KAAA;;;;;;;;;;EAGnC,AAAA,oBAKC;;;;UALwC,QAAiB;;;;;;;;kDAAjB,QAAiB;GAKzD;;;;"
+}
