@@ -132,7 +132,7 @@ Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a rec
 
 - Network: **Midnight Preprod**
 - Contract address: **pending final Preprod deployment**
-- Live demo: **[VeilPass on GitHub Pages](https://lequanghoa26032003.github.io/veilpass-midnight/)**
+- Live demo: **[VeilPass on Vercel](https://veilpass-midnight.vercel.app/)**
 - Wallet: Lace DApp Connector API `4.x`
 - Circuit call: `claimBenefit(SHA-256(campaign identifier))`
 
