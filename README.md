@@ -90,10 +90,10 @@ npm run test:e2e
 
 ## Deployment evidence
 
-- Network: **pending Preview deployment**
-- Contract address: **pending Preview deployment**
-- Compile screenshot: add after running `npm run compile`
-- Deployment screenshot: add after the terminal prints the contract address
+- Network: **Midnight Preview**
+- Contract address: **`b68c6d615e01f837891381fe6faf840e258a597b3e8e6de722c4f88fd858b33d`**
+- Final verification: `npm run compile`, `npm test`, `npm run build`, and `npm run test:e2e` all pass.
+- The e2e check reconnects to the deployed address and reads its indexed on-chain state.
 
 Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a recovery phrase.
 
