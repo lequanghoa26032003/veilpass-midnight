@@ -95,6 +95,14 @@ npm run test:e2e
 - Final verification: `npm run compile`, `npm test`, `npm run build`, and `npm run test:e2e` all pass.
 - The e2e check reconnects to the deployed address and reads its indexed on-chain state.
 
+### Successful Compact compilation
+
+![Compact compiler output listing the claimBenefit circuit](docs/screenshots/compile-success.png)
+
+### Verified Preview deployment
+
+![E2E verification showing the Preview contract address](docs/screenshots/preview-deployment.png)
+
 Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a recovery phrase.
 
 ## Useful scripts
