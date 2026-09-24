@@ -5,7 +5,7 @@ import { campaignToId, hasLocalCredential, shortHex, VeilPassClient } from './co
 import { useContractState } from './use-contract-state';
 
 type WalletStatus = 'detecting' | 'missing' | 'ready' | 'connecting' | 'connected';
-type ClaimStatus = 'idle' | 'joining' | 'proving' | 'submitted' | 'error';
+type ClaimStatus = 'idle' | 'deploying' | 'joining' | 'proving' | 'submitted' | 'error';
 
 declare global {
   interface Window {
@@ -130,6 +130,27 @@ export default function App() {
     setNotice(null);
   }, [contractDraft]);
 
+  const deployNewContract = useCallback(async () => {
+    if (!connectedAPI) {
+      setNotice('Connect Lace before deploying a Preprod contract.');
+      return;
+    }
+    setNotice(null);
+    setClaimStatus('deploying');
+    try {
+      const client = await VeilPassClient.deploy(connectedAPI);
+      const address = client.contractAddress;
+      setContractAddress(address);
+      setContractDraft(address);
+      setCredentialPresent(true);
+      setClaimStatus('idle');
+      setNotice(`Contract deployed on Preprod: ${address}`);
+    } catch (caught) {
+      setClaimStatus('error');
+      setNotice(friendlyError(caught));
+    }
+  }, [connectedAPI]);
+
   const claim = useCallback(async () => {
     if (!connectedAPI) {
       setNotice('Connect Lace before creating a private claim.');
@@ -161,13 +182,14 @@ export default function App() {
   }, [campaign, connectedAPI, contractAddress, publicState]);
 
   const progressLabel = useMemo(() => {
+    if (claimStatus === 'deploying') return 'Deploying contract…';
     if (claimStatus === 'joining') return 'Joining contract…';
     if (claimStatus === 'proving') return 'Generating zero-knowledge proof…';
     if (claimStatus === 'submitted') return 'Claim submitted';
     return 'Prove & claim benefit';
   }, [claimStatus]);
 
-  const busy = claimStatus === 'joining' || claimStatus === 'proving';
+  const busy = claimStatus === 'deploying' || claimStatus === 'joining' || claimStatus === 'proving';
   const isConnected = walletStatus === 'connected';
 
   return (
@@ -260,6 +282,9 @@ export default function App() {
           <div className="contract-control">
             <label htmlFor="contract">Preprod contract</label>
             <div><input id="contract" value={contractDraft} onChange={(event) => setContractDraft(event.target.value)} placeholder="64-character contract address" /><button onClick={applyContract}>Load</button></div>
+            <button className="deploy-button" onClick={deployNewContract} disabled={!isConnected || busy}>
+              {claimStatus === 'deploying' ? 'Deploying with Lace…' : 'Deploy a new Preprod contract with Lace'}
+            </button>
             {contractAddress && <code>{shortHex(contractAddress, 22, 16)}</code>}
             {publicState.error && <p className="inline-error">{publicState.error}</p>}
           </div>

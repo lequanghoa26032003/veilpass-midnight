@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
+  base: './',
   publicDir: '../contracts/managed/veilpass',
   cacheDir: './.vite',
   build: {

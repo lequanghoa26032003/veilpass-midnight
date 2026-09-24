@@ -110,6 +110,8 @@ code { color: #979dad; font: 10px 'DM Mono', monospace; }
 .contract-control input { padding: 0 12px; }
 .contract-control button { border: 0; border-left: 1px solid var(--line); padding: 0 15px; color: #c6b9fa; background: rgba(157,120,255,.08); font-size: 10px; font-weight: 700; }
 .contract-control > code { display: block; padding-top: 8px; }
+.contract-control .deploy-button { width: 100%; min-height: 38px; margin-top: 9px; border: 1px solid rgba(157,120,255,.24); border-radius: 8px; color: #c8baff; background: rgba(157,120,255,.07); font-size: 10px; font-weight: 700; }
+.contract-control .deploy-button:hover:not(:disabled) { background: rgba(157,120,255,.13); }
 .inline-error { color: #ff8c97; font-size: 10px; margin: 8px 0 0; }
 .privacy-list { list-style: none; margin: 25px 0 20px; padding: 0; border-top: 1px solid var(--line); }
 .privacy-list li { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--line); color: #b8bdc8; font-size: 11px; }

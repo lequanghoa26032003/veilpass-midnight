@@ -1,5 +1,5 @@
 import type { ConnectedAPI } from '@midnight-ntwrk/dapp-connector-api';
-import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
+import { deployContract, findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';
 import { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';
 import { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';
@@ -51,7 +51,8 @@ async function createProviders(connectedAPI: ConnectedAPI): Promise<Providers> {
   const config = await connectedAPI.getConfiguration();
   if (!config.proverServerUri) throw new Error('Lace did not provide a proof-server URL.');
   const shielded = await connectedAPI.getShieldedAddresses();
-  const zkConfigProvider = new FetchZkConfigProvider<CircuitKey>(window.location.origin, fetch.bind(window));
+  const assetBaseUrl = new URL(import.meta.env.BASE_URL, window.location.href).toString();
+  const zkConfigProvider = new FetchZkConfigProvider<CircuitKey>(assetBaseUrl, fetch.bind(window));
 
   return {
     privateStateProvider: browserPrivateStateProvider(),
@@ -95,6 +96,19 @@ export class VeilPassClient {
       privateStateId: PRIVATE_STATE_ID,
       initialPrivateState: getOrCreatePrivateState(),
     });
+    providers.privateStateProvider.setContractAddress(contractAddress);
+    return new VeilPassClient(contract, contractAddress);
+  }
+
+  static async deploy(connectedAPI: ConnectedAPI): Promise<VeilPassClient> {
+    const providers = await createProviders(connectedAPI);
+    const contract = await deployContract(providers as any, {
+      compiledContract: compiledContract as any,
+      args: [],
+      privateStateId: PRIVATE_STATE_ID,
+      initialPrivateState: getOrCreatePrivateState(),
+    });
+    const contractAddress = contract.deployTxData.public.contractAddress;
     providers.privateStateProvider.setContractAddress(contractAddress);
     return new VeilPassClient(contract, contractAddress);
   }
