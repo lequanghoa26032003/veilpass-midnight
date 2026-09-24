@@ -17,7 +17,9 @@
     "proof-server:stop": "docker compose down",
     "clean": "node scripts/clean.mjs",
     "test": "tsx --test tests/**/*.test.ts",
-    "test:e2e": "tsx scripts/e2e-check.ts"
+    "test:e2e": "tsx scripts/e2e-check.ts",
+    "web:dev": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build"
   },
   "dependencies": {
     "@midnight-ntwrk/compact-runtime": "0.16.0",

@@ -1,6 +1,19 @@
 # VeilPass
 
-VeilPass is a privacy-first eligibility and benefit-claiming prototype built with Compact on Midnight Network. This repository is the Level 1 — New Moon submission for RiseIn's *New Moon to Full: Monthly Moonshots on Midnight* program.
+VeilPass is a privacy-first eligibility and benefit-claiming DApp built with Compact and Midnight.js. The repository contains the Level 1 contract/toolchain foundation and the Level 2 — Waxing Crescent Lace-connected frontend for RiseIn's *New Moon to Full: Monthly Moonshots on Midnight* program.
+
+## Level 2 web DApp
+
+The React frontend in `web/` provides the complete browser claim flow:
+
+- detects a compatible Lace wallet through DApp Connector API 4.x;
+- connects to Midnight **Preprod** and supports a local disconnect;
+- joins the deployed VeilPass contract and invokes the `claimBenefit` circuit;
+- generates the credential secret in the browser and keeps it in local private state;
+- reads only the public aggregate claim count and used-nullifier count from the Preprod indexer;
+- explains exactly what is private and what is deliberately disclosed.
+
+The frontend follows the provider pattern in Midnight's official browser examples and uses Midnight.js `4.1.1`, matching the Compact `0.31.1` / runtime `0.16.0` artifacts committed in this repository.
 
 ## Product idea
 
@@ -52,6 +65,16 @@ npm run compile
 npm test
 npm run build
 ```
+
+Run the Lace-connected frontend:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Then open `http://localhost:5173`, unlock Lace, select Preprod, and click **Connect Lace**. For a production build, run `npm run web:build` from the repository root.
 
 A successful compile prints `Compiling 1 circuits:` and creates:
 
@@ -105,6 +128,29 @@ npm run test:e2e
 
 Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a recovery phrase.
 
+## Level 2 Preprod submission
+
+- Network: **Midnight Preprod**
+- Contract address: **pending final Preprod deployment**
+- Live demo: **pending hosting after the Preprod address is recorded**
+- Wallet: Lace DApp Connector API `4.x`
+- Circuit call: `claimBenefit(SHA-256(campaign identifier))`
+
+### Privacy claim
+
+The browser creates and stores a random 32-byte credential secret locally. When the user claims a benefit, the Compact circuit consumes that secret as a private witness and derives a campaign-specific nullifier. Only the opaque nullifier and aggregate counter update are public; the credential, identity, and raw secret are not transmitted to the contract or displayed on-chain. Reusing the same private credential for the same campaign produces the same nullifier and is rejected, proving one-time eligibility without revealing the credential.
+
+### Demo recording checklist
+
+Record one continuous clip showing:
+
+1. the live VeilPass URL on Preprod;
+2. Lace connecting and the shortened wallet address appearing;
+3. a campaign identifier and the “local only” credential indicator;
+4. the successful `claimBenefit` circuit submission in Lace;
+5. the public claim/nullifier counters refreshing while the credential remains undisclosed;
+6. the **Disconnect** action returning the DApp to its offline state.
+
 ## Useful scripts
 
 | Command | Purpose |
@@ -116,6 +162,8 @@ Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a rec
 | `npm run setup -- --network preprod` | Compile and deploy to Preprod |
 | `npm run cli` | Claim a benefit or inspect public claim statistics |
 | `npm run test:e2e` | Reconnect to a deployed contract and read its state |
+| `npm run web:dev` | Start the Level 2 React/Lace frontend |
+| `npm run web:build` | Type-check and build the production frontend |
 
 ## Repository structure
 
@@ -127,6 +175,9 @@ src/deploy.ts                    Preview/Preprod deployment
 src/cli.ts                       Contract interaction CLI
 tests/veilpass.test.ts           Passing local test suite
 scripts/e2e-check.ts             Post-deployment smoke test
+web/src/App.tsx                  Level 2 user interface and Lace connect/disconnect
+web/src/contract-client.ts       Browser Midnight providers and circuit call
+web/src/private-state-provider.ts Browser-local credential/private state
 docker-compose.yml               Midnight node/indexer/proof-server services
 ```
 
