@@ -140,6 +140,12 @@ Never commit `.midnight-state.json`, `.midnight-wallet-state/`, a seed, or a rec
 
 The browser creates and stores a random 32-byte credential secret locally. When the user claims a benefit, the Compact circuit consumes that secret as a private witness and derives a campaign-specific nullifier. Only the opaque nullifier and aggregate counter update are public; the credential, identity, and raw secret are not transmitted to the contract or displayed on-chain. Reusing the same private credential for the same campaign produces the same nullifier and is rejected, proving one-time eligibility without revealing the credential.
 
+### Verified Preprod circuit call
+
+The live DApp invoked `claimBenefit` through Lace on Preprod. The public claim and nullifier counters advanced to `1`, while the credential remained marked local and undisclosed.
+
+![Successful Preprod claim with public counters updated and private credential retained locally](docs/screenshots/preprod-claim-success.png)
+
 ### Demo recording checklist
 
 Record one continuous clip showing:
