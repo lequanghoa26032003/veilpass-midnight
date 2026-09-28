@@ -122,6 +122,8 @@ The suite contains **7 tests** covering:
 - duplicate-claim rejection;
 - proof transcript privacy: the raw secret is present only in private transcript output and absent from public inputs and public transcript output.
 
+![Seven passing contract and privacy tests](docs/screenshots/tests-passing.png)
+
 ## CI/CD
 
 The workflow at [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every push to `main` and on every pull request. It uses Node.js 22 and Midnight's official Compact setup action, then performs:
